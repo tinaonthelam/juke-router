@@ -91,6 +91,7 @@ export default class AppContainer extends Component {
   }
 
   selectAlbum (albumId) {
+    console.log(albumId);
     axios.get(`/api/albums/${albumId}`)
       .then(res => res.data)
       .then(album => this.setState({

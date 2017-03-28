@@ -11,6 +11,7 @@ const Album = (props) => {
   return (
     <div className="album">
       <div>
+      <Link to={`/albums/${album.id}`}/>
         <h3>{ album.name }</h3>
         <img src={ album.imageUrl } className="img-thumbnail" />
       </div>
