@@ -23,6 +23,7 @@ export default class AppContainer extends Component {
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
     this.deselectAlbum = this.deselectAlbum.bind(this);
+    this.onLoad = this.onLoad.bind(this);
   }
 
   componentDidMount () {
