@@ -8,6 +8,8 @@ import Albums from '../components/Albums.js';
 import Album from '../components/Album';
 import Sidebar from '../components/Sidebar';
 import Player from '../components/Player';
+import Artists from '../components/Artists';
+import Artist from '../components/Artist';
 
 import { convertAlbum, convertAlbums, skip } from '../utils';
 
@@ -22,14 +24,19 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
-    this.deselectAlbum = this.deselectAlbum.bind(this);
     this.onLoad = this.onLoad.bind(this);
   }
 
   componentDidMount () {
     axios.get('/api/albums/')
       .then(res => res.data)
-      .then(album => this.onLoad(convertAlbums(album)));
+      .then(album => this.onLoad(convertAlbums(album)))
+
+    axios.get('/api/artists/')
+      .then(res => res.data)
+      .then(artists => {
+        console.log('artists', artists)
+        this.setState({artists: artists})});
 
     AUDIO.addEventListener('ended', () =>
       this.next());
@@ -92,7 +99,6 @@ export default class AppContainer extends Component {
   }
 
   selectAlbum (albumId) {
-    console.log(albumId);
     axios.get(`/api/albums/${albumId}`)
       .then(res => res.data)
       .then(album => this.setState({
@@ -101,15 +107,11 @@ export default class AppContainer extends Component {
       .then(console.log(this.state))
   }
 
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
-  }
-
   render () {
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
-          <Sidebar deselectAlbum={this.deselectAlbum} />
+          <Sidebar />
         </div>
         <div className="col-xs-10">
           {
@@ -122,7 +124,9 @@ export default class AppContainer extends Component {
                 toggle: this.toggleOne,
 
                 albums: this.state.albums,
-                selectAlbum: this.selectAlbum
+                selectAlbum: this.selectAlbum,
+
+                artists: this.state.artists
               })
               : null
           }
