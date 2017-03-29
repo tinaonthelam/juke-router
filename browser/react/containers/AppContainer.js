@@ -118,10 +118,9 @@ export default class AppContainer extends Component {
 
       Promise.all([gettingArtist, gettingAlbums, gettingSongs])
       .then((values)=>{
-        console.log('promise values',values)
         this.setState({
           selectedArtist: values[0],
-          selectedArtistAlbums: values[1],
+          selectedArtistAlbums: convertAlbums(values[1]),
           selectedArtistSongs: values[2],
         })
       })

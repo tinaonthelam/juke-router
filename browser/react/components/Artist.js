@@ -15,19 +15,38 @@ class Artist extends React.Component {
   }
 
   render() {
-    console.log('props in our Artist Render',this.props)
-    this.selectedArtist= this.props.selectedArtist;
     this.selectedArtistAlbums = this.props.selectedArtistAlbums;
     this.selectedArtistSongs = this.props.selectedArtistSongs;
+    this.currentSong = this.props.currentSong;
+    this.isPlaying = this.props.isPlaying;
+    this.toggleOne = this.props.toggleOne;
+    this.albumId = this.props.albumId;
+    this.selectAlbum = this.props.selectAlbum;
 
-  return (
-    <div>
-      <h3>{this.selectedArtist.name}</h3>
-      <h4>ALBUMS</h4>
-        <Albums albums={this.selectedArtistAlbums}/>
-      <h4>SONGS</h4>
-    </div>
-    )
+    const selectedArtist = this.props.selectedArtist;
+    const children = this.props.children;
+    const propsToPassToChildren = {
+      selectedArtist: this.selectedArtist,
+      albums: this.selectedArtistAlbums,
+      songs: this.selectedArtistSongs,
+      currentSong: this.currentSong,
+      isPlaying: this.isPlaying,
+      toggleOne: this.toggleOne,
+      albumId: this.albumId,
+      selectAlbum: this.selectAlbum
+    };
+
+
+    return (
+      <div>
+        <h3>{ selectedArtist.name }</h3>
+        <ul className="nav nav-tabs">
+          <li><Link to={`/artists/${selectedArtist.id}/albums`}>ALBUMS</Link></li>
+          <li><Link to={`/artists/${selectedArtist.id}/songs`}>SONGS</Link></li>
+        </ul>
+        { children && React.cloneElement(children, propsToPassToChildren) }
+      </div>
+    );
   }
 }
 

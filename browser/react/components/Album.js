@@ -1,5 +1,5 @@
 import React from 'react';
-import Songs from '../components/Songs';
+import Songs from './Songs';
 import {Link} from 'react-router'
 import axios from 'axios';
 import { convertAlbum, convertAlbums, skip } from '../utils';
