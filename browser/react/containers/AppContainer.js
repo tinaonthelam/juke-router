@@ -24,6 +24,7 @@ export default class AppContainer extends Component {
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
+    this.selectArtist = this.selectArtist.bind(this);
     this.onLoad = this.onLoad.bind(this);
   }
 
@@ -35,7 +36,6 @@ export default class AppContainer extends Component {
     axios.get('/api/artists/')
       .then(res => res.data)
       .then(artists => {
-        console.log('artists', artists)
         this.setState({artists: artists})});
 
     AUDIO.addEventListener('ended', () =>
@@ -104,7 +104,27 @@ export default class AppContainer extends Component {
       .then(album => this.setState({
         selectedAlbum: convertAlbum(album)
       }))
-      .then(console.log(this.state))
+  }
+
+   selectArtist (artistId) {
+    let gettingArtist = axios.get(`/api/artists/${artistId}`)
+      .then(res => res.data)
+
+    let gettingAlbums = axios.get(`/api/artists/${artistId}/albums`)
+      .then(res => res.data)
+
+    let gettingSongs = axios.get(`/api/artists/${artistId}/songs`)
+      .then(res => res.data)
+
+      Promise.all([gettingArtist, gettingAlbums, gettingSongs])
+      .then((values)=>{
+        console.log('promise values',values)
+        this.setState({
+          selectedArtist: values[0],
+          selectedArtistAlbums: values[1],
+          selectedArtistSongs: values[2],
+        })
+      })
   }
 
   render () {
@@ -126,7 +146,11 @@ export default class AppContainer extends Component {
                 albums: this.state.albums,
                 selectAlbum: this.selectAlbum,
 
-                artists: this.state.artists
+                artists: this.state.artists,
+                selectArtist: this.selectArtist,
+                selectedArtist: this.state.selectedArtist,
+                selectedArtistAlbums: this.state.selectedArtistAlbums,
+                selectedArtistSongs: this.state.selectedArtistSongs
               })
               : null
           }

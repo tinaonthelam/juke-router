@@ -1,39 +1,31 @@
 import React from 'react';
-import Songs from '../components/Songs';
+import Songs from './Songs';
 import {Link} from 'react-router'
 import axios from 'axios';
 import AUDIO from '../audio';
+import Albums from './Albums';
 
 class Artist extends React.Component {
 
   componentDidMount () {
-    const albumId = this.props.routeParams.albumId;
+    const artistId = this.props.routeParams.artistId;
     const selectArtist = this.props.selectArtist;
 
-    selectArtist(albumId);
-    console.log(this.props);
+    selectArtist(artistId);
   }
 
   render() {
-
-    this.album = this.props.album;
-    this.currentSong = this.props.currentSong;
-    this.isPlaying = this.props.isPlaying;
-    this.toggleOne = this.props.toggleOne;
-    this.albumId = this.props.routeParams.albumId
-    this.selectArtist = this.props.selectArtist;
+    console.log('props in our Artist Render',this.props)
+    this.selectedArtist= this.props.selectedArtist;
+    this.selectedArtistAlbums = this.props.selectedArtistAlbums;
+    this.selectedArtistSongs = this.props.selectedArtistSongs;
 
   return (
-    <div className="album">
-      <div>
-        <h3>{ this.album.name }</h3>
-        <img src={ this.album.imageUrl } className="img-thumbnail" />
-      </div>
-      <Songs
-        songs={this.album.songs}
-        currentSong={this.currentSong}
-        isPlaying={this.isPlaying}
-        toggleOne={this.toggleOne} />
+    <div>
+      <h3>{this.selectedArtist.name}</h3>
+      <h4>ALBUMS</h4>
+        <Albums albums={this.selectedArtistAlbums}/>
+      <h4>SONGS</h4>
     </div>
     )
   }

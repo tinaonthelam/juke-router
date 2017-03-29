@@ -12,7 +12,6 @@ class Album extends React.Component {
     const selectAlbum = this.props.selectAlbum;
 
     selectAlbum(albumId);
-    console.log(this.props);
   }
 
   render() {
