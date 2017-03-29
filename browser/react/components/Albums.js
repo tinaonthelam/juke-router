@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'react-router'
+import {Link} from 'react-router'
 
 const Albums = (props) => {
 
@@ -16,8 +16,8 @@ const Albums = (props) => {
       <div className="row">
       {
         albums.map(album => (
-          <div className="col-xs-4" key={ album.id }>
-            <a className="thumbnail" href="#" onClick={() => selectAlbum(album.id)}>
+            <div className="col-xs-4" key={ album.id }>
+              <Link to={`/albums/${album.id}`} className="thumbnail">
               <img src={ album.imageUrl } />
 
               <div className="caption">
@@ -26,8 +26,8 @@ const Albums = (props) => {
                 </h5>
                 <small>{ album.songs.length } songs</small>
               </div>
-            </a>
-          </div>
+             </Link>
+            </div>
         ))
       }
       </div>

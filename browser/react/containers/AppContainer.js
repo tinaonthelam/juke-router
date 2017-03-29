@@ -97,7 +97,8 @@ export default class AppContainer extends Component {
       .then(res => res.data)
       .then(album => this.setState({
         selectedAlbum: convertAlbum(album)
-      }));
+      }))
+      .then(console.log(this.state))
   }
 
   deselectAlbum () {

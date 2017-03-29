@@ -1,31 +1,29 @@
 import React from 'react';
 import Songs from '../components/Songs';
-import Link from 'react-router'
+import {Link} from 'react-router'
 import axios from 'axios';
 import { convertAlbum, convertAlbums, skip } from '../utils';
 import AUDIO from '../audio';
 
 class Album extends React.Component {
 
-  constructor(props){
-    super(props)
+  componentDidMount () {
+    const albumId = this.props.routeParams.albumId;
+    const selectAlbum = this.props.selectAlbum;
+
+    selectAlbum(albumId);
+    console.log(this.props);
+  }
+
+  render() {
+
     this.album = this.props.album;
     this.currentSong = this.props.currentSong;
     this.isPlaying = this.props.isPlaying;
     this.toggleOne = this.props.toggleOne;
     this.albumId = this.props.routeParams.albumId
     this.selectAlbum = this.props.selectAlbum;
-  }
 
-
-  componentDidMount () {
-    const albumId = this.props.routeParams.albumId;
-    const selectAlbum = this.props.selectAlbum;
-
-    selectAlbum(albumId);
-  }
-
-  render() {
   return (
     <div className="album">
       <div>
